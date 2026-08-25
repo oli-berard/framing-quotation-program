@@ -15,6 +15,9 @@ const els = {
   quoteBody: document.getElementById("quoteBody"),
 };
 
+let catalog = { mouldings: [], boards: [] };
+let scales = {};
+
 const rand = (n) => Intl.NumberFormat("en-ZA", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n);
 const rnum = (n, digits = 2) => Number(n).toLocaleString("en-ZA", { minimumFractionDigits: digits, maximumFractionDigits: digits });
 
@@ -25,11 +28,6 @@ function money(n) {
 function hide(node) {
   node.hidden = true;
   node.innerHTML = "";
-}
-
-async function search(kind, query) {
-  const res = await fetch(`/api/${kind}?q=${encodeURIComponent(query)}`);
-  return res.json();
 }
 
 function renderSuggest(container, rows, onPick) {
@@ -52,7 +50,7 @@ function renderSuggest(container, rows, onPick) {
   });
 }
 
-function bindAutocomplete(input, suggest, kind, meta, formatter) {
+function bindAutocomplete(input, suggest, searchFn, meta, formatter) {
   let timer = null;
   input.addEventListener("input", () => {
     clearTimeout(timer);
@@ -61,8 +59,8 @@ function bindAutocomplete(input, suggest, kind, meta, formatter) {
       hide(suggest);
       return;
     }
-    timer = setTimeout(async () => {
-      const rows = await search(kind, query);
+    timer = setTimeout(() => {
+      const rows = searchFn(query);
       renderSuggest(suggest, rows, (code, row) => {
         input.value = code;
         meta.textContent = formatter(row);
@@ -74,13 +72,21 @@ function bindAutocomplete(input, suggest, kind, meta, formatter) {
   input.addEventListener("blur", () => setTimeout(() => hide(suggest), 120));
 }
 
-bindAutocomplete(els.frameCode, els.frameSuggest, "mouldings", els.frameMeta, (row) => {
-  return `${row.description} · ${row.material} · ${row.width_mm} mm wide · R ${rand(row.base)} / m excl VAT`;
-});
+bindAutocomplete(
+  els.frameCode,
+  els.frameSuggest,
+  (query) => searchRows(catalog.mouldings, query),
+  els.frameMeta,
+  (row) => `${row.description} · ${row.material} · ${row.width_mm} mm wide · R ${rand(row.base)} / m excl VAT`
+);
 
-bindAutocomplete(els.mountCode, els.mountSuggest, "boards", els.mountMeta, (row) => {
-  return `${row.description} · ${row.width_mm} × ${row.height_mm} mm · R ${rand(row.price)} / sheet excl VAT`;
-});
+bindAutocomplete(
+  els.mountCode,
+  els.mountSuggest,
+  (query) => searchRows(catalog.boards, query, ["category"]),
+  els.mountMeta,
+  (row) => `${row.description} · ${row.width_mm} × ${row.height_mm} mm · R ${rand(row.price)} / sheet excl VAT`
+);
 
 els.mountNeeded.addEventListener("change", () => {
   els.mountFields.hidden = !els.mountNeeded.checked;
@@ -146,9 +152,9 @@ function renderQuote(data) {
 }
 
 let quoteTimer = null;
-async function quote() {
+function quote() {
   clearTimeout(quoteTimer);
-  quoteTimer = setTimeout(async () => {
+  quoteTimer = setTimeout(() => {
     const payload = {
       width_mm: els.width.value,
       height_mm: els.height.value,
@@ -163,12 +169,22 @@ async function quote() {
       els.quoteBody.innerHTML = "";
       return;
     }
-    const res = await fetch("/api/quote", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-    const data = await res.json();
-    renderQuote(data);
+    renderQuote(calculateQuote(catalog, scales, payload));
   }, 180);
 }
+
+async function boot() {
+  try {
+    const [catalogRes, scalesRes] = await Promise.all([
+      fetch("catalog.json"),
+      fetch("scales.json"),
+    ]);
+    catalog = await catalogRes.json();
+    scales = await scalesRes.json();
+  } catch (err) {
+    els.quoteStatus.textContent = "Could not load price lists.";
+    els.quoteBody.innerHTML = `<p class="error">${err.message}</p>`;
+  }
+}
+
+boot();
