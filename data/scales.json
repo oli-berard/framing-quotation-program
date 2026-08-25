@@ -1,0 +1,31 @@
+{
+  "vat_rate": 0.15,
+  "glass": {
+    "status": "live",
+    "label": "2mm glass",
+    "note": "Sliding scale from 2mm glass 976 × 815 mm = R450 inclusive. Smaller jobs pay more per m²; larger jobs ease slightly. A minimum covers cutting a small pane.",
+    "method": "area_rate",
+    "thickness_mm": 2,
+    "reference": {
+      "width_mm": 976,
+      "height_mm": 815,
+      "price_excl": 450
+    },
+    "small_area_m2": 0.12,
+    "small_factor": 1.25,
+    "large_area_m2": 1.6,
+    "large_factor": 0.95,
+    "minimum_excl": 95
+  },
+  "accessories": {
+    "status": "live",
+    "note": "R30 up to 1 m², R50 above 1 m². Prices are inclusive.",
+    "base_excl": 30,
+    "large_excl": 50,
+    "large_area_m2": 1.0
+  },
+  "job_multiplier": {
+    "factor": 2.4,
+    "note": "Materials total × 2.4 covers overcuts, mistakes and labour."
+  }
+}

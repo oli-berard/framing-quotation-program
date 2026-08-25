@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Framing Quotation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,650&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Serame March 2026 price lists</p>
+      <h1>Framing Quotation</h1>
+    </div>
+    <p class="vat-note">Frame and mount + 15% VAT · glass and accessories inclusive · quote × 2.4</p>
+  </header>
+
+  <main class="layout">
+    <section class="card">
+      <h2>Job details</h2>
+
+      <div class="row">
+        <label>
+          Width (mm)
+          <input id="width" type="number" min="1" step="1" value="500" />
+        </label>
+        <label>
+          Height (mm)
+          <input id="height" type="number" min="1" step="1" value="1000" />
+        </label>
+      </div>
+
+      <label class="stack">
+        Frame code
+        <input id="frameCode" type="text" autocomplete="off" placeholder="e.g. ER218KIAAT" />
+        <div id="frameSuggest" class="suggest" hidden></div>
+        <p id="frameMeta" class="meta"></p>
+      </label>
+
+      <label class="check">
+        <input id="mountNeeded" type="checkbox" />
+        Mount board needed
+      </label>
+      <div id="mountFields" class="optional" hidden>
+        <label class="stack">
+          Mount board code
+          <input id="mountCode" type="text" autocomplete="off" placeholder="e.g. HW6000-120" />
+          <div id="mountSuggest" class="suggest" hidden></div>
+          <p id="mountMeta" class="meta"></p>
+        </label>
+      </div>
+
+      <label class="check">
+        <input id="glassNeeded" type="checkbox" />
+        2mm glass needed
+      </label>
+
+      <label class="check">
+        <input id="accessoriesNeeded" type="checkbox" checked />
+        Accessories
+      </label>
+
+      <p class="hint">
+        Moulding length is the frame perimeter plus 0.5 m, then always rounded up to the next whole metre.
+        Mount board is charged as the percentage of the sheet used, or the full sheet if the frame is over 50% of the board.
+        Accessories are R30 up to 1 m² and R50 above that (inclusive). Frame and mount board add 15% VAT. The quote is the added-up total × 2.4.
+      </p>
+    </section>
+
+    <section class="card quote">
+      <div class="quote-head">
+        <h2>Quote</h2>
+        <p id="quoteStatus" class="meta">Enter a frame code to cost this job.</p>
+      </div>
+      <div id="quoteBody"></div>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

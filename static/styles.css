@@ -1,0 +1,237 @@
+:root {
+  --ink: #23180f;
+  --muted: #6d5c4d;
+  --walnut: #5c3a21;
+  --paper: #f3eee4;
+  --card: #fffcf7;
+  --line: #e4d8c6;
+  --brass: #b0893e;
+  --ok: #2d6a4f;
+  --warn: #9a4a1c;
+  --shadow: 0 10px 30px rgba(60, 40, 20, 0.08);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background:
+    radial-gradient(1200px 400px at 10% -10%, #fff8ea, transparent 60%),
+    var(--paper);
+  color: var(--ink);
+  font-family: "Source Sans 3", "Segoe UI", sans-serif;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+  padding: 28px 36px 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  color: var(--brass);
+  font-weight: 700;
+}
+
+h1, h2 {
+  font-family: "Source Serif 4", Georgia, serif;
+  margin: 0;
+}
+
+h1 { font-size: 2rem; font-weight: 650; }
+h2 { font-size: 1.35rem; margin-bottom: 16px; }
+
+.vat-note {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.layout {
+  width: min(1100px, calc(100% - 40px));
+  margin: 28px auto 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  padding: 24px;
+  position: relative;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+label {
+  display: block;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--walnut);
+  margin-bottom: 14px;
+}
+
+.stack { position: relative; }
+
+input[type="number"],
+input[type="text"] {
+  width: 100%;
+  margin-top: 6px;
+  padding: 11px 12px;
+  border: 1px solid #d8cbb8;
+  border-radius: 10px;
+  background: #fff;
+  font: inherit;
+  color: var(--ink);
+}
+
+input:focus {
+  outline: 2px solid rgba(176, 137, 62, 0.35);
+  border-color: var(--brass);
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  margin: 8px 0;
+}
+
+.check input { width: 16px; height: 16px; }
+
+.pill {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--warn);
+  background: #f8eadc;
+  border-radius: 999px;
+  padding: 3px 8px;
+}
+
+.optional { margin: 0 0 8px 26px; }
+
+.meta {
+  min-height: 1.2em;
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.hint {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.suggest {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  z-index: 5;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.suggest button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  padding: 9px 12px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.suggest button:hover { background: #f6efe3; }
+
+.suggest .code {
+  font-weight: 700;
+  margin-right: 8px;
+}
+
+.quote-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.line {
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+
+.line:first-child { border-top: 0; }
+
+.line-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-weight: 700;
+}
+
+.line-top span:last-child { white-space: nowrap; }
+
+.line p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.totals {
+  margin-top: 8px;
+  padding-top: 14px;
+  border-top: 2px solid var(--walnut);
+}
+
+.totals div {
+  display: flex;
+  justify-content: space-between;
+  margin: 6px 0;
+}
+
+.grand {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--walnut);
+}
+
+.error {
+  color: #8a2b16;
+  background: #fbeee8;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-weight: 600;
+}
+
+@media (max-width: 800px) {
+  .topbar, .layout { padding-left: 16px; padding-right: 16px; }
+  .layout, .row { grid-template-columns: 1fr; }
+  .topbar { flex-direction: column; align-items: start; }
+}

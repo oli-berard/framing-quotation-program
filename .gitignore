@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.venv/
+data/_extract/
+data/framing.db
+data/catalog.json
