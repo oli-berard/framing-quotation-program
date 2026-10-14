@@ -49,6 +49,8 @@ SKIP_PREFIXES = (
     "REGULAR FOAM",
     "ARCHIVAL FOAM",
     "BLACK CORE FOAM",
+    "MOULDING PRICE LIST",
+    "LAMINATED",
 )
 
 BOARD_CATEGORY_PREFIXES = (
@@ -193,11 +195,13 @@ def create_schema(conn: sqlite3.Connection) -> None:
 def import_catalog(db_path: Path = DB_PATH) -> dict:
     wood_pdf = PDF_DIR / "Wood Mouldings - March 2026.pdf"
     synth_pdf = PDF_DIR / "Synthetic Mouldings - March 2026.pdf"
+    veneer_pdf = PDF_DIR / "Laminated Wood Veneer Mouldings - March 2026.pdf"
     mat_pdf = PDF_DIR / "Matboards - March 2026.pdf"
     foam_pdf = PDF_DIR / "Foam Core - March 2026.pdf"
 
     mouldings = parse_mouldings(pdf_text(wood_pdf), "wood", wood_pdf.name)
     mouldings += parse_mouldings(pdf_text(synth_pdf), "synthetic", synth_pdf.name)
+    mouldings += parse_mouldings(pdf_text(veneer_pdf), "laminated veneer", veneer_pdf.name)
 
     boards = parse_boards(pdf_text(mat_pdf), "matboard", mat_pdf.name)
     foam = parse_boards(pdf_text(foam_pdf), "foam_core", foam_pdf.name)
@@ -256,6 +260,37 @@ def import_catalog(db_path: Path = DB_PATH) -> dict:
         "boards": boards,
     }
     CATALOG_PATH.write_text(json.dumps(catalog, indent=2), encoding="utf-8")
+    static_catalog = ROOT / "static" / "catalog.json"
+    static_catalog.write_text(
+        json.dumps(
+            {
+                "mouldings": [
+                    {
+                        "code": row["code"],
+                        "description": row["description"],
+                        "base": row["base"],
+                        "width_mm": row["width_mm"],
+                        "material": row["material"],
+                    }
+                    for row in mouldings
+                ],
+                "boards": [
+                    {
+                        "code": row["code"],
+                        "description": row["description"],
+                        "category": row["category"],
+                        "width_mm": row["width_mm"],
+                        "height_mm": row["height_mm"],
+                        "price": row["price"],
+                        "board_type": row["board_type"],
+                    }
+                    for row in boards
+                ],
+            },
+            separators=(",", ":"),
+        ),
+        encoding="utf-8",
+    )
     return {
         "mouldings": len(mouldings),
         "boards": len(boards),

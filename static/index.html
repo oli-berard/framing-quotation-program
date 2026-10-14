@@ -7,15 +7,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,650&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="/static/styles.css" />
 </head>
 <body>
   <header class="topbar">
     <div>
-      <p class="eyebrow">Serame March 2026 price lists</p>
+      <p class="eyebrow">Serame March 2026 · wood, synthetic, laminated veneer, boards</p>
       <h1>Framing Quotation</h1>
     </div>
-    <p class="vat-note">Frame and mount + 15% VAT · glass and accessories inclusive · quote × 2.4</p>
+    <p class="vat-note">Frame and mount + 15% VAT · glass and accessories inclusive · quote × 2.85</p>
   </header>
 
   <main class="layout">
@@ -35,7 +35,7 @@
 
       <label class="stack">
         Frame code
-        <input id="frameCode" type="text" autocomplete="off" placeholder="e.g. ER218KIAAT" />
+        <input id="frameCode" type="text" autocomplete="off" placeholder="e.g. ER218KIAAT or ER900VR-NAT" />
         <div id="frameSuggest" class="suggest" hidden></div>
         <p id="frameMeta" class="meta"></p>
       </label>
@@ -66,7 +66,7 @@
       <p class="hint">
         Moulding length is the frame perimeter plus 0.5 m, then always rounded up to the next whole metre.
         Mount board is charged as the percentage of the sheet used, or the full sheet if the frame is over 50% of the board.
-        Accessories are R30 up to 1 m² and R50 above that (inclusive). Frame and mount board add 15% VAT. The quote is the added-up total × 2.4.
+        Accessories are R30 up to 1 m² and R50 above that (inclusive). Frame and mount board add 15% VAT. The quote is the added-up total × 2.85.
       </p>
     </section>
 
@@ -79,7 +79,6 @@
     </section>
   </main>
 
-  <script src="pricing.js"></script>
-  <script src="app.js"></script>
+  <script src="/static/app.js"></script>
 </body>
 </html>

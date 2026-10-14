@@ -89,11 +89,6 @@ def quote():
     return jsonify(result), status
 
 
-@app.get("/<path:filename>")
-def static_files(filename):
-    return send_from_directory(app.static_folder, filename)
-
-
 if __name__ == "__main__":
     ensure_database()
     app.run(host="127.0.0.1", port=5055, debug=True)

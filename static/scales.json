@@ -25,7 +25,7 @@
     "large_area_m2": 1.0
   },
   "job_multiplier": {
-    "factor": 2.4,
-    "note": "Materials total × 2.4 covers overcuts, mistakes and labour."
+    "factor": 2.85,
+    "note": "Materials total × 2.85 covers overcuts, mistakes and labour."
   }
 }
