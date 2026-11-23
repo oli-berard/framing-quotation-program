@@ -15,7 +15,7 @@
       <p class="eyebrow">Serame March 2026 · wood, synthetic, laminated veneer, boards</p>
       <h1>Framing Quotation</h1>
     </div>
-    <p class="vat-note">Frame and mount + 15% VAT · glass and accessories inclusive · quote × 2.85</p>
+    <p class="vat-note">Frame and mount + 15% VAT · glass and accessories inclusive · labour multiplier editable</p>
   </header>
 
   <main class="layout">
@@ -63,10 +63,15 @@
         Accessories
       </label>
 
+      <label>
+        Overcuts, mistakes, labour
+        <input id="multiplier" type="number" min="1" step="0.05" value="2.3" />
+      </label>
+
       <p class="hint">
         Moulding length is the frame perimeter plus 0.5 m, then always rounded up to the next whole metre.
         Mount board is charged as the percentage of the sheet used, or the full sheet if the frame is over 50% of the board.
-        Accessories are R30 up to 1 m² and R50 above that (inclusive). Frame and mount board add 15% VAT. The quote is the added-up total × 2.85.
+        Accessories are R30 up to 1 m² and R50 above that (inclusive). Frame and mount board add 15% VAT. The quote is materials × the labour multiplier (default 2.3).
       </p>
     </section>
 

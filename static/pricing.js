@@ -193,7 +193,9 @@ function calculateQuote(catalog, scales, payload) {
   }
 
   const materials = money(lines.reduce((sum, line) => sum + line.incl, 0));
-  const multiplier = scales.job_multiplier?.factor || 2.85;
+  const defaultMultiplier = scales.job_multiplier?.factor || 2.3;
+  let multiplier = Number(payload.multiplier);
+  if (!Number.isFinite(multiplier) || multiplier < 1) multiplier = defaultMultiplier;
   return {
     ok: true,
     vat_rate: vatRate,

@@ -11,6 +11,7 @@ const els = {
   mountMeta: document.getElementById("mountMeta"),
   glassNeeded: document.getElementById("glassNeeded"),
   accessoriesNeeded: document.getElementById("accessoriesNeeded"),
+  multiplier: document.getElementById("multiplier"),
   quoteStatus: document.getElementById("quoteStatus"),
   quoteBody: document.getElementById("quoteBody"),
 };
@@ -87,7 +88,7 @@ els.mountNeeded.addEventListener("change", () => {
   quote();
 });
 
-["width", "height", "frameCode", "mountCode", "glassNeeded", "accessoriesNeeded"].forEach((key) => {
+["width", "height", "frameCode", "mountCode", "glassNeeded", "accessoriesNeeded", "multiplier"].forEach((key) => {
   els[key].addEventListener("change", quote);
   els[key].addEventListener("input", quote);
 });
@@ -157,6 +158,7 @@ async function quote() {
       mount_code: els.mountCode.value,
       glass_needed: els.glassNeeded.checked,
       accessories_needed: els.accessoriesNeeded.checked,
+      multiplier: els.multiplier.value,
     };
     if (!payload.frame_code) {
       els.quoteStatus.textContent = "Enter a frame code to cost this job.";

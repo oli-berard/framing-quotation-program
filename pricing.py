@@ -287,7 +287,13 @@ def calculate_quote(conn: sqlite3.Connection, payload: dict) -> dict:
         )
 
     materials = money(sum(line["incl"] for line in lines))
-    multiplier = float(scales.get("job_multiplier", {}).get("factor", 2.85))
+    default_multiplier = float(scales.get("job_multiplier", {}).get("factor", 2.3))
+    try:
+        multiplier = float(payload.get("multiplier") if payload.get("multiplier") not in (None, "") else default_multiplier)
+    except (TypeError, ValueError):
+        multiplier = default_multiplier
+    if multiplier < 1:
+        multiplier = default_multiplier
     quote_total = money(materials * multiplier)
 
     return {
